@@ -1,0 +1,23 @@
+name: Update Tag
+
+env:
+  GIT_USERNAME: ${{ secrets.GIT_USERNAME  }}
+  GIT_PASSWORD: ${{ secrets.GIT_PASSWORD  }}
+  REGISTRY_HOST: ${{ secrets.REGISTRY_HOST  }}
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME  }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD  }}
+
+on:
+  repository_dispatch:
+    types: [tag]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy
+        run: |
+          cd $GITHUB_WORKSPACE
+          .github/workflows/update-tag.sh
